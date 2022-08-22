@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, createSelector } from "@reduxjs/toolkit";
-import { getAll } from "./dataService";
+import { API } from "../../api";
+// import todoService  from "./dataService";
 const initialState = {
-  data: [],
+  data: {},
   isFiltering: false,
   isLoading: false,
   isSuccess: false,
@@ -9,9 +10,12 @@ const initialState = {
   message: ''
 }
 
-export const getAllData = createAsyncThunk('todo/getAll', async(_, thunkAPI) => {
+export const getAllData = createAsyncThunk('data/getAll', async(_, thunkAPI) => {
   try {
-    return await getAll()
+    const data = await API.get('/')
+    // console.log(data.data.data)
+    return data.data.data
+    // return todoService.getAll()
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
 
@@ -27,7 +31,7 @@ export const getAllData = createAsyncThunk('todo/getAll', async(_, thunkAPI) => 
 // export const getAllTodos = createSelector(selectTodos, todos => todos.map(todo => todo))
 
 export const dataSlice = createSlice({
-  name: 'covid',
+  name: 'data',
   initialState,
   reducers: {
     resetTodo: (state) => {
@@ -45,7 +49,7 @@ export const dataSlice = createSlice({
       .addCase(getAllData.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.todos = action.payload
+        state.data = action.payload
       })
       .addCase(getAllData.rejected, (state, action) => {
         state.isLoading= false

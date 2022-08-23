@@ -1,0 +1,24 @@
+.card {
+  border-radius: 10px;
+  padding: 15px;
+  width: 200px;
+}
+
+.card p {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.card span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card span:first-child {
+  font-size: 50px !important;
+}
+
+.card h1 {
+  font-weight: 600;
+}

@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, createSelector } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API } from "../../api";
-// import todoService  from "./dataService";
+
 const initialState = {
   data: {},
   isFiltering: false,
@@ -13,9 +13,7 @@ const initialState = {
 export const getAllData = createAsyncThunk('data/getAll', async(_, thunkAPI) => {
   try {
     const data = await API.get('/')
-    // console.log(data.data.data)
     return data.data.data
-    // return todoService.getAll()
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
 
@@ -23,12 +21,6 @@ export const getAllData = createAsyncThunk('data/getAll', async(_, thunkAPI) => 
   }
 })
 
-// const selectTodos = state => state.todos
-// export const getCompletedTodos = createSelector(selectTodos, todos => todos.filter(todo => todo.completed))
-
-// export const getActiveTodos = createSelector(selectTodos, todos => todos.filter(todo => !todo.completed))
-
-// export const getAllTodos = createSelector(selectTodos, todos => todos.map(todo => todo))
 
 export const dataSlice = createSlice({
   name: 'data',
@@ -59,7 +51,6 @@ export const dataSlice = createSlice({
       
   }
 })
-
 
 export const { resetTodo } = dataSlice.actions
 export default dataSlice.reducer

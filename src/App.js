@@ -1,27 +1,41 @@
+import React from 'react'
 import './App.css';
 
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import {getAllData} from './features/covid/dataSlice'
+import { getAllData } from './features/covid/dataSlice'
 
 import { useSelector } from 'react-redux'
+import BarChart from './components/BarChart';
+import DoughnutChart from './components/DoughnutChart';
+import CardCollection from './components/CardCollection'
+
+import Spinner from './components/Spinner';
 
 function App() {
   const dispatch = useDispatch()
 
-  const { data } = useSelector(state => state.data)
   useEffect(() => {
     dispatch(getAllData())
-  }, [])
-  console.log(data)
+  }, [dispatch])
+  
+  const { isLoading, data } = useSelector(state => state.data)
+
+  if (isLoading) return <Spinner />  
   return (
     <div className="App">
-      <h1>COVID-19 HELPER NG</h1>
-      <h2>Total Samples tested: {parseInt(data.totalSamplesTested.split(',').join(''))}</h2>
-      <h2>Total number of cases in Nigeria: {data.totalConfirmedCases}</h2>
-      <h2>Discharged Patients: {data.discharged}</h2>
-      <h2>Number of deaths: {data.death}</h2>
-      <h2>Active Cases: {data.totalActiveCases}</h2>
+      <h1 style={{ padding: '0 0 50px', fontSize: 24, color: 'rgb(44,49,60)',}}>Covid19 Helper Dashboard</h1>
+      <div className='first-section'>
+        <CardCollection size={25}/>
+      </div>
+      <div className="second-section">
+        <div className="bar">
+          <BarChart />
+        </div>
+        <div className="dough">
+          <DoughnutChart />
+        </div>
+      </div>
     </div>
   );
 }

@@ -33,3 +33,17 @@
 .dough {
   width: 30%;
 }
+
+@media (max-width: 800px) {
+  .second-section {
+    flex-direction: column;
+  }
+
+  .bar {
+    width: 100%;
+  }
+
+  .dough {
+    width: 100%;
+  }
+}
